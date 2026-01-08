@@ -60,4 +60,40 @@ public class KafkaConsumerConfig {
 		factory.setConsumerFactory(productRankingConsumerFactory());
 		return factory;
 	}
+
+	// 결제 기록 전용 컨슈머 그룹 만들어주기
+	@Bean
+	public ConsumerFactory<String, PaymentCompletedEvent> paymentHistoryConsumerFactory() {
+
+		Map<String, Object> props = new HashMap<>();
+
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, "payment-history-group");
+
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+
+		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+
+		// 어떤 객체를 json 으로 파싱해서 넘길건지
+		JsonDeserializer<PaymentCompletedEvent> deserializer = new JsonDeserializer<>(PaymentCompletedEvent.class);
+
+		return new DefaultKafkaConsumerFactory<>(
+			props,
+			new StringDeserializer(),
+			deserializer
+		);
+	}
+
+	// ListenerContainer 카프카 토픽에 값이 들어왔는지 안들어왔는지 감지
+	// Listener 에 ConsumerFactory 등록하기
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, PaymentCompletedEvent> paymentHistoryKafkaListenerContainerFactory() {
+
+		ConcurrentKafkaListenerContainerFactory<String, PaymentCompletedEvent> factory
+			= new ConcurrentKafkaListenerContainerFactory<>();
+
+		factory.setConsumerFactory(paymentHistoryConsumerFactory());
+		return factory;
+	}
 }
