@@ -25,6 +25,6 @@ public class PaymentHistoryService {
 
 		paymentHistoryRepository.save(paymentHistory);
 
-		log.info("[DB] : 결제 기롤 저장 완료! paymentId : {}, productId : {}", paymentHistory.getPaymentId(), paymentHistory.getProductId());
+		log.info("[DB] : 결제 기록 저장 완료! paymentId : {}, productId : {}", paymentHistory.getPaymentId(), paymentHistory.getProductId());
 	}
 }

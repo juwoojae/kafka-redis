@@ -17,6 +17,11 @@ public class PaymentService {
 
 	private final PaymentProducer producer;
 
+	/**
+	 * 결제 완료 이벤트 발생
+	 * CompletePaymentRequest 로 들어온것을 Producer 가 PaymentCompletedEvent 로 변환.
+	 * @param request
+	 */
 	public void paymentComplete(CompletePaymentRequest request) {
 
 		// 결제 PG 사 통신 로직
