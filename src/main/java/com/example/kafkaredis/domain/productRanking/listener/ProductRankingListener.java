@@ -45,7 +45,7 @@ public class ProductRankingListener {
 	@KafkaListener(
 		topics = TOPIC_PAYMENT_COMPLETED,
 		groupId = "product-ranking-group",
-		containerFactory = "paymentListenerContainerFactory"
+		containerFactory = "paymentListenerContainerFactory" //이 리스너가 가지고있는 예외 핸들러로 매핑이 된다
 	)
 	public void consumer2(PaymentCompletedEvent event) {
 

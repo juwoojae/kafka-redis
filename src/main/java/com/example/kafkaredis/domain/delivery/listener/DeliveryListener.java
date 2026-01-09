@@ -34,6 +34,12 @@ public class DeliveryListener {
 	)
 	public void consume1(PaymentCompletedEvent event) {
 
+
+		// 테스트용 : 특정 productId에 대해서는 일부러 예외 발생
+		if (event.getProductId() == 999L) {
+			log.info("[Delivery-Consumer] 테스트용 예외 발생 - productId=999");
+			throw new RuntimeException("테스트용 배송 에러");
+		}
 		deliveryService.createDeliveryFromPayment(event);
 
 		log.info("[Delivery-Consumer] 결제완료 이벤트 수신성공 : orderId : {}, userId : {}"
@@ -47,8 +53,14 @@ public class DeliveryListener {
 	)
 	public void consume2(PaymentCompletedEvent event) {
 
-		deliveryService.createDeliveryFromPayment(event);
 
+		// 테스트용 : 특정 productId에 대해서는 일부러 예외 발생
+		if (event.getProductId() == 999L) {
+			log.info("[Delivery-Consumer] 테스트용 예외 발생 - productId=999");
+			throw new RuntimeException("테스트용 배송 에러");
+		}
+
+		deliveryService.createDeliveryFromPayment(event);
 		log.info("[Delivery-Consumer] 결제완료 이벤트 수신성공 : orderId : {}, userId : {}"
 			, event.getOrderId(), event.getUserId());
 	}
@@ -60,8 +72,14 @@ public class DeliveryListener {
 	)
 	public void consume3(PaymentCompletedEvent event) {
 
-		deliveryService.createDeliveryFromPayment(event);
 
+		// 테스트용 : 특정 productId에 대해서는 일부러 예외 발
+		if (event.getProductId() == 999L) {
+			log.info("[Delivery-Consumer] 테스트용 예외 발생 - productId=999");
+			throw new RuntimeException("테스트용 배송 에러");
+		}
+
+		deliveryService.createDeliveryFromPayment(event);
 		log.info("[Delivery-Consumer] 결제완료 이벤트 수신성공 : orderId : {}, userId : {}"
 			, event.getOrderId(), event.getUserId());
 	}
