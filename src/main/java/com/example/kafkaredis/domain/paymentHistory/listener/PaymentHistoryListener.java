@@ -1,4 +1,4 @@
-package com.example.kafkaredis.domain.paymentHistory;
+package com.example.kafkaredis.domain.paymentHistory.listener;
 
 import static com.example.kafkaredis.common.model.kafka.topic.KafkaTopic.*;
 
@@ -24,7 +24,35 @@ public class PaymentHistoryListener {
 		groupId = "payment-history-group",
 		containerFactory = "paymentHistoryKafkaListenerContainerFactory"
 	)
-	public void consume(PaymentCompletedEvent event) {
+	public void consume1(PaymentCompletedEvent event) {
+
+		log.info("[Consumer-History] 결제 완료 이벤트 수신! paymentId : {}, productId :{}"
+			, event.getPaymentId(), event.getProductId());
+
+		// DB 에 결제 왐료 기록을 저장
+		paymentHistoryService.savePaymentHistory(event);
+	}
+
+	@KafkaListener(
+		topics = TOPIC_PAYMENT_COMPLETED,
+		groupId = "payment-history-group",
+		containerFactory = "paymentHistoryKafkaListenerContainerFactory"
+	)
+	public void consume2(PaymentCompletedEvent event) {
+
+		log.info("[Consumer-History] 결제 완료 이벤트 수신! paymentId : {}, productId :{}"
+			, event.getPaymentId(), event.getProductId());
+
+		// DB 에 결제 왐료 기록을 저장
+		paymentHistoryService.savePaymentHistory(event);
+	}
+
+	@KafkaListener(
+		topics = TOPIC_PAYMENT_COMPLETED,
+		groupId = "payment-history-group",
+		containerFactory = "paymentHistoryKafkaListenerContainerFactory"
+	)
+	public void consume3(PaymentCompletedEvent event) {
 
 		log.info("[Consumer-History] 결제 완료 이벤트 수신! paymentId : {}, productId :{}"
 			, event.getPaymentId(), event.getProductId());

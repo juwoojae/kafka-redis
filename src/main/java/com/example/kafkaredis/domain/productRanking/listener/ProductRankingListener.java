@@ -28,7 +28,45 @@ public class ProductRankingListener {
 		groupId = "product-ranking-group",
 		containerFactory = "paymentListenerContainerFactory"
 	)
-	public void consumer(PaymentCompletedEvent event) {
+	public void consumer1(PaymentCompletedEvent event) {
+
+		log.info("[상품 랭킹 조회 리스너] : 성공적으로 값을 잘 가지고 옴");
+
+		// 결제 완료된 시간을 기준으로 판매 완료 랭킹을 반영한다
+
+		// 결제 완료된 시간을 String -> LocalDateTime 으로 먼저 받고
+		// LocalDateTime -> LocalDate 로 받아서 처리하기
+		LocalDateTime paidAt = LocalDateTime.parse(event.getPaidAt());
+		LocalDate currentDate = paidAt.toLocalDate();
+
+		productRankingService.increaseProductRanking(event.getProductId(), currentDate);
+	}
+
+	@KafkaListener(
+		topics = TOPIC_PAYMENT_COMPLETED,
+		groupId = "product-ranking-group",
+		containerFactory = "paymentListenerContainerFactory"
+	)
+	public void consumer2(PaymentCompletedEvent event) {
+
+		log.info("[상품 랭킹 조회 리스너] : 성공적으로 값을 잘 가지고 옴");
+
+		// 결제 완료된 시간을 기준으로 판매 완료 랭킹을 반영한다
+
+		// 결제 완료된 시간을 String -> LocalDateTime 으로 먼저 받고
+		// LocalDateTime -> LocalDate 로 받아서 처리하기
+		LocalDateTime paidAt = LocalDateTime.parse(event.getPaidAt());
+		LocalDate currentDate = paidAt.toLocalDate();
+
+		productRankingService.increaseProductRanking(event.getProductId(), currentDate);
+	}
+
+	@KafkaListener(
+		topics = TOPIC_PAYMENT_COMPLETED,
+		groupId = "product-ranking-group",
+		containerFactory = "paymentListenerContainerFactory"
+	)
+	public void consumer3(PaymentCompletedEvent event) {
 
 		log.info("[상품 랭킹 조회 리스너] : 성공적으로 값을 잘 가지고 옴");
 
