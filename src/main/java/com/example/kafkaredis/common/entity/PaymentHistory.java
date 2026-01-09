@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import com.example.kafkaredis.common.enums.Category;
 import com.example.kafkaredis.common.model.kafka.event.PaymentCompletedEvent;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -26,6 +27,7 @@ public class PaymentHistory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(unique = true)
 	private Long paymentId;
 	private Long orderId;
 	private Long productId;
